@@ -54,12 +54,14 @@ func sanitizedCommits(client *github.Client, ctx context.Context, repositoryComm
 func getCommitsComparison(client *github.Client, ctx context.Context, base string, head string) []github.RepositoryCommit {
 	commitsComparison, _, err := client.Repositories.CompareCommits(ctx, owner, repo, base, head)
 	if err != nil {
-		logrus.WithError(err).Fatal("could not fetch the list of commits for HEAD: %s and BASE: %s", head, base)
+		message := fmt.Sprintf("could not fetch the list of commits for HEAD: %s and BASE: %s", head, base)
+		logrus.WithError(err).Fatal(message)
 	}
 	logComparisonInfo(commitsComparison)
 
 	if commitsComparison.GetTotalCommits() == 0 {
-		logrus.Fatal("No commits found between HEAD: %s and BASE: %s", head, base)
+		message := fmt.Sprintf("No commits found between HEAD: %s and BASE: %s", head, base)
+		logrus.Fatal(message)
 	}
 
 	return commitsComparison.Commits
@@ -111,7 +113,8 @@ func getArgs() (string, string) {
 	}
 	base := os.Args[1]
 	head := os.Args[2]
-	logrus.Info("Running sanitizer between HEAD: %s and BASE: %s", head, base)
+	message := fmt.Sprintf("Running sanitizer between HEAD: %s and BASE: %s", head, base)
+	logrus.Info(message)
 	return base, head
 }
 
