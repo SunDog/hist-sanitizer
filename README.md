@@ -22,7 +22,7 @@ is transformed into:
 * Title of commit 1
 ```
 
-## Run on cli:
+## How to use it:
 Just call it from the cli replacing the tags:
 ``` bash
 $ ./hist-sanitizer <GIT-TAG-BASE> <GIT-TAG-HEAD>
@@ -34,7 +34,9 @@ Or for authenticated calls:
 $ GITHUB_API_TOKEN=<your-token> ./hist-sanitizer <GIT-TAG-BASE> <GIT-TAG-HEAD>
 ```
 
-## Run With docker for live reloading:
+## Development mode:
+Using docker with live reloading
+
 On `.air.toml` file change the property `full_bin` passing the tags you want to see on live reload
 Then:
 ``` bash
