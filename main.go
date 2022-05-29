@@ -37,15 +37,16 @@ func main() {
 func sanitizedCommits(client *github.Client, ctx context.Context, repositoryCommits []github.RepositoryCommit) []string {
 	logrus.Info("Searching for PR's that begins with \"Merge pull request # \" ")
 	sanitizedCommits := []string{}
-	for _, repoCommit := range repositoryCommits {
+	for i, repoCommit := range repositoryCommits {
+		line := "LINE " + strconv.Itoa(i) + ": "
 		pullNumber, err := getPullRequestNumber(repoCommit)
 		if err != nil {
 			logrus.WithError(err).Debug("Saving commit message")
-			sanitizedCommits = append(sanitizedCommits, repoCommit.Commit.GetMessage())
+			sanitizedCommits = append(sanitizedCommits, line+repoCommit.Commit.GetMessage())
 		} else {
 			logrus.Info("Automatic merge found. Fetching PR #", pullNumber)
 			pullRequest := getPR(client, ctx, pullNumber)
-			sanitizedCommits = append(sanitizedCommits, pullRequest.GetTitle())
+			sanitizedCommits = append(sanitizedCommits, line+pullRequest.GetTitle())
 		}
 	}
 	return sanitizedCommits
