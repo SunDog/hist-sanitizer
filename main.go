@@ -85,7 +85,7 @@ func getPullRequestNumber(repoCommit github.RepositoryCommit) (int, error) {
 	pullNumber, err := strconv.Atoi(matches[len(matches)-1])
 	if err != nil {
 		logrus.Error()
-		return 0, errors.New("Wierd. Could not convert matched result to number: " + strings.Join(matches, " "))
+		return 0, errors.New("Weird. Could not convert matched result to number: " + strings.Join(matches, " "))
 	}
 
 	return pullNumber, nil
